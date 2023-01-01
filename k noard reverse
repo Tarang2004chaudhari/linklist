@@ -1,0 +1,68 @@
+#include<iostream>
+using namespace std;
+class node{
+    public:
+     int data;
+     node* next;
+      node(int d){
+        this->data=d;
+        this->next=NULL;
+      }
+
+};
+void addback(node* &tail,int d){
+    node*temp=new node(d);
+    tail->next=temp;
+    // temp->data=d;
+    tail=temp;
+}
+node *knode(node* &head,int k){  
+        if(head==NULL ){
+        // cout<<"l";
+           return NULL;
+    }
+    node*current=head;
+    node*prev=NULL;
+    node*forward=NULL;
+    int count=0;
+
+    while (current!=NULL && count<k)
+    {
+         forward=current->next;
+         current->next=prev;
+         prev=current;
+         current=forward;  
+         count++;
+    }
+
+    if (forward!=NULL)
+    {
+        head->next=knode(forward,k);
+    }
+    return prev;
+}
+void print(node* &head){
+    node*temp=head;
+    while(temp!=NULL){
+            cout<<temp->data<<"->";
+            temp=temp->next;
+    }
+}
+int main(){
+    node*newnode1=new node(10);
+    node*head=newnode1;
+    node*tail=newnode1;
+    addback(tail,78);
+    addback(tail,780);
+    addback(tail,56);
+    addback(tail,45);
+    addback(tail,40);
+    addback(tail,87);
+   print(head);
+   cout<<endl;
+    knode(head,3);
+
+    print(head);
+
+return 0;
+}
