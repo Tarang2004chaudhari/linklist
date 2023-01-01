@@ -1,0 +1,132 @@
+#include<iostream>
+#include<map>
+using namespace std;
+class node{
+  
+  public :
+  int data;
+  node* next;
+
+  node(int d){
+    this->data=d;
+    this->next=NULL;
+
+  }
+};
+void addback(node* &tail,int d){
+    node*temp=new node(d);
+    tail->next=temp;
+    // temp->data=d;
+    tail=temp;
+}
+void print(node* &head){
+    node*temp=head;
+    while(temp!=NULL){
+            cout<<temp->data<<"->";
+            temp=temp->next;
+    }
+}
+
+void cycle(node* &head){
+    map<node*,bool>visited;
+       node*temp=head;
+       while (temp!=NULL)
+       {   
+           if(visited[temp]==true){
+            cout<<"yes";
+               return ;
+           }
+           visited[temp]=true;
+           temp=temp->next;
+       }
+       
+}
+
+//______________________  method 2_________________________________________
+void floydcycle(node* &head){
+    node*slow=head;
+    node*fast=head;
+    while (slow!=NULL)
+    {
+       
+
+        // cout<<"j";
+       slow=slow->next;
+       fast=fast->next->next;
+
+         if(slow==fast){
+            cout<<"yes";
+            return;
+        }
+    }
+    
+}
+void firstelement(node* &head){
+    node*slow=head;
+    node*slownew=head;
+    node*fast=head;
+
+    while (slow!=NULL)
+    {
+
+      
+       slow=slow->next;
+       fast=fast->next->next;
+         if(slow==fast){
+            slow=head;
+          
+            while (fast!=NULL)
+            {
+                if(slow==fast){
+                    cout<<slow->data;
+                    cout<<fast->data;
+                    return;
+                }
+                slow=slow->next;
+                 cout<<slow->data;
+                fast=fast->next;
+            }
+            
+     
+        }
+    }
+    
+}
+void removecycle(node* &head){
+    map<node*,bool>visited;
+       node*temp=head;
+       node*temp2;
+       while (temp!=NULL)
+       {   
+           if(visited[temp]==true){
+               temp=temp2;
+               temp->next=NULL;
+               return ;
+           }
+        //    temp2=temp;
+           visited[temp]=true;
+            temp2=temp;
+           temp=temp->next;
+       }
+       
+}
+int main(){
+    node*newnode1=new node(30);
+    node*head=newnode1;
+    node*tail=newnode1;
+    addback(tail,78);
+    addback(tail,789);
+    addback(tail,785);
+    addback(tail,782);
+    addback(tail,781);
+    tail->next=head->next;
+    // floydcycle(head);
+    // firstelement(head);
+    cycle(head);
+    removecycle(head);
+    cycle(head);
+
+
+
+return 0;
+}
