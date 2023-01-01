@@ -45,7 +45,7 @@ node *reverse(node* &head)
     {            
 
         forward=curr->next; 
-        curr=prev->next;
+        curr->next=prev;
         prev=curr;
         curr=forward;
        cout<<"h";
